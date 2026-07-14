@@ -173,8 +173,8 @@ def _show_ubuntu():
     # ── Services ──────────────────────────────────────────────
     with tab1:
         swing_services = [
-            ("ngen26-sync", "Data Sync Agent", "Market data sync (Mon-Fri)"),
-            ("ngen26-swing-live", "Swing Unified Live Trader", "All 3 swing strategies in one process"),
+            ("swing-sync", "Data Sync Agent", "Market data sync (Mon-Fri)"),
+            ("swing-live", "Swing Unified Live Trader", "All 3 swing strategies in one process"),
         ]
         c1, c2 = st.columns(2)
         if c1.button("Start All Swing Live", type="primary", use_container_width=True):
@@ -214,7 +214,7 @@ def _show_ubuntu():
     # ── Scheduled Scans ───────────────────────────────────────
     with tab2:
         st.subheader("SwingPortfolio Cron Jobs")
-        cron_content = subprocess.run(["sudo", "-n", "cat", "/etc/cron.d/ngen26"], capture_output=True, text=True).stdout
+        cron_content = subprocess.run(["sudo", "-n", "cat", "/etc/cron.d/swing"], capture_output=True, text=True).stdout
         if cron_content:
             for line in cron_content.split("\n"):
                 if "SwingPortfolio" in line or any(s in line for s in ("donchian_adx", "keltner_rsi", "supertrend_volume")):
@@ -227,11 +227,10 @@ def _show_ubuntu():
         for sid in ["donchian_adx", "keltner_rsi", "supertrend_volume"]:
             c1, c2 = st.columns([1, 3])
             if c1.button(f"Scan {sid}", key=f"run_scan_{sid}"):
-                cmd = ["/home/kiran/ngen26/venv/bin/python",
-                       "common/agents/strategy_agent.py",
-                       "--project", "SwingPortfolio",
+                cmd = ["/opt/swing/venv/bin/python",
+                       "/opt/swing/SwingPortfolio/core/strategy_agent.py",
                        "--strategy", sid, "--mode", "scan"]
-                r = subprocess.run(cmd, capture_output=True, text=True, timeout=60, cwd="/home/kiran/ngen26")
+                r = subprocess.run(cmd, capture_output=True, text=True, timeout=60, cwd="/opt/swing/SwingPortfolio")
                 st.code((r.stdout + "\n" + r.stderr).strip()[:2000], language="bash")
             c2.markdown(f"`{sid}`")
 
@@ -239,7 +238,7 @@ def _show_ubuntu():
     with tab3:
         st.subheader("SwingPortfolio Logs")
         svc_log = getattr(st.session_state, "swing_log_svc", None)
-        opts = {"ngen26-sync": "Data Sync", "ngen26-swing-live": "Swing Live Trader"}
+        opts = {"swing-sync": "Data Sync", "swing-live": "Swing Live Trader"}
         selected = st.selectbox("Service", list(opts.keys()),
                                 index=list(opts.keys()).index(svc_log) if svc_log in opts else 0,
                                 format_func=lambda s: opts[s])
@@ -251,6 +250,6 @@ def _show_ubuntu():
         if rc.stdout.strip():
             st.code(rc.stdout, language="bash")
         else:
-            log_file = f"/home/kiran/logs/{selected.replace('ngen26-', '')}.log"
+            log_file = f"/opt/swing/logs/{selected.replace('swing-', '')}.log"
             r2 = subprocess.run(["sudo", "-n", "tail", "-n", str(lines), log_file], capture_output=True, text=True)
             st.code(r2.stdout if r2.stdout.strip() else "No logs", language="bash")

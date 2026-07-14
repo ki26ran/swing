@@ -284,7 +284,8 @@ def _load_all_selections():
         sdir = os.path.join(DATA_DIR, "..", "cfg", "default_strategies.json")
     try:
         with open(sdir) as f:
-            strat_cfgs = json.load(f) if isinstance(json.load(f), list) else []
+            data = json.load(f)
+        strat_cfgs = data if isinstance(data, list) else []
     except Exception:
         strat_cfgs = []
     strat_names = {s.get("id"): s.get("name", s.get("id", "?")) for s in strat_cfgs}
@@ -463,7 +464,7 @@ def _phase_entry():
                     pos_entry["option_delta"] = opt_sizing["delta"]
                     pos_entry["option_expiry"] = opt_sizing["expiry"]
                     pos_entry["option_label"] = opt_sizing["label"]
-                    pos_entry["option_type"] = opt_type
+                    pos_entry["option_type"] = "C" if direction == "LONG" else "P"
                     pos_entry["option_symbol"] = option_symbol
                     pos_entry["option_entry_premium"] = round(option_premium, 2)
                     pos_entry["tv_pct"] = opt_sizing["tv_pct"]

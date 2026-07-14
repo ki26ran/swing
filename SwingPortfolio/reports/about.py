@@ -289,7 +289,7 @@ def show():
             st.markdown("""
             ### First-time setup
             ```
-            cd C:\\ngen26\\SwingPortfolio
+            cd C:\\prod\\swing\\SwingPortfolio
             pip install streamlit pandas yfinance plotly requests numpy gspread oauth2client
             streamlit run dashboard.py
             ```
@@ -320,7 +320,7 @@ def show():
             | Live Trader | 09:35 | to 15:15 | Read selections, zscore entry, 60s monitor loop |
 
             All tasks run Mon-Fri, auto-restart on failure (3 attempts).
-            Path: C:\\ngen26\\SwingPortfolio with anaconda3 python.exe
+            Path: C:\\prod\\swing\\SwingPortfolio with anaconda3 python.exe
             """)
 
         with tab_c:
