@@ -1,0 +1,69 @@
+{
+  "strategies": [
+    {
+      "id": "donchian_adx",
+      "name": "Donchian + ADX",
+      "module": "strategies.donchian_adx",
+      "class": "DonchianADXStrategy",
+      "description": "Donchian 20d breakout + ADX>35 + DI confirmation",
+      "enabled": true,
+      "live": false,
+      "broker_name": "xyz",
+      "broker_username": "pqr",
+      "universe": "Margin < 200K",
+      "entry_time": "zscore",
+      "params": {
+        "donchian_period": 20,
+        "atr_period": 14,
+        "adx_threshold": 35,
+        "atr_multiplier": 2.0
+      }
+    },
+    {
+      "id": "keltner_rsi",
+      "name": "Keltner + RSI + Volume",
+      "module": "strategies.keltner_rsi",
+      "class": "KeltnerRSIStrategy",
+      "description": "Keltner 20/2 + RSI 55/45 + Volume 2.0x + ADX>25",
+      "enabled": true,
+      "live": false,
+      "broker_name": "xyz",
+      "broker_username": "pqr",
+      "universe": "Margin < 200K",
+      "entry_time": "zscore",
+      "params": {
+        "keltner_period": 20,
+        "keltner_multiplier": 2.0,
+        "rsi_period": 14,
+        "rsi_long_min": 55,
+        "rsi_short_max": 45,
+        "volume_ma_period": 20,
+        "volume_multiplier": 2.0,
+        "adx_threshold": 25
+      }
+    },
+    {
+      "id": "supertrend_volume",
+      "name": "Supertrend + Volume",
+      "module": "strategies.supertrend_volume",
+      "class": "SupertrendVolumeStrategy",
+      "description": "ATR-based supertrend (p=10, mult=3.0) + volume filter (1.0x avg) | SL=2.0x ATR, RR=2.0, max_hold=10d",
+      "enabled": true,
+      "live": false,
+      "broker_name": "xyz",
+      "broker_username": "pqr",
+      "universe": "Nifty 50",
+      "entry_time": "zscore",
+      "params": {
+        "period": 10,
+        "multiplier": 3.0,
+        "volume_ma_period": 20,
+        "volume_filter": 1.0,
+        "sl_atr_multiplier": 2.0,
+        "rr_ratio": 2.0,
+        "max_hold_days": 10,
+        "trail_pct": 0.02
+      }
+    }
+  ]
+}

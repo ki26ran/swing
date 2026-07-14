@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+*.duckdb
+*.duckdb.wal
+*.duckdb.tmp
+.env
+venv/
+.venv/
+*.log
+.DS_Store
+
+# Per-machine config (may contain secrets)
+common/market_data/config.prod.json
+SwingPortfolio/data/
+SwingPortfolio/cache/
+SwingPortfolio/cfg/strategies.json
+SwingPortfolio/cfg/broker_config.json
+SwingPortfolio/cfg/telegram_config.json
