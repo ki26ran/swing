@@ -16,6 +16,8 @@ PAGES = {
     "📊 Dashboard": "SwingPortfolio.reports.dashboard",
     "📈 Stock Selection": "SwingPortfolio.reports.stock_selection",
     "⏪ Backtest": "SwingPortfolio.reports.backtest",
+    "📡 Live Monitor": "SwingPortfolio.reports.live_monitor",
+    "⚙️ Scheduler": "SwingPortfolio.reports.scheduler",
     "⚙️ Admin": "SwingPortfolio.reports.admin",
     "📖 Guide": "SwingPortfolio.reports.about",
 }
