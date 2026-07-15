@@ -58,7 +58,7 @@ def show():
     cfg_list = load_config().get("strategies", [])
     strat_map = {s.get("id"): s for s in cfg_list}
     for s in get_all_strategies():
-        sid = s.strategy_id() if hasattr(s, "strategy_id") else str(s)
+        sid = s.strategy_id if hasattr(s, "strategy_id") else str(s)
         sc = strat_map.get(sid, {})
         enabled = sc.get("enabled", True)
         status = "✅" if enabled else "⛔"
