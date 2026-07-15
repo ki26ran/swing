@@ -277,7 +277,7 @@ def _get_entry_price_live(sym, direction, date_str, entry_mode):
 
 
 def _load_all_selections():
-    """Load selections from per-strategy files. Returns merged dict matching combined format."""
+    """Load selections from per-strategy files or combined selections.json."""
     combined = {"date": _now().strftime("%Y-%m-%d"), "results": {}}
     sdir = os.path.join(DATA_DIR, "..", "cfg", "strategies.json")
     if not os.path.exists(sdir):
@@ -300,6 +300,21 @@ def _load_all_selections():
                     "name": strat_names.get(sid, sid),
                     "data": sd.get("data", []),
                 }
+            except Exception:
+                pass
+
+    # Fallback: load from combined selections.json if per-strategy files empty
+    if not any(combined["results"].values()):
+        sel_file = os.path.join(DATA_DIR, "selections.json")
+        if os.path.exists(sel_file):
+            try:
+                with open(sel_file) as f:
+                    sel_all = json.load(f)
+                for sid, sdata in sel_all.get("results", {}).items():
+                    if isinstance(sdata, dict):
+                        combined["results"][sid] = sdata
+                    elif isinstance(sdata, list):
+                        combined["results"][sid] = {"name": strat_names.get(sid, sid), "data": sdata}
             except Exception:
                 pass
     return combined
