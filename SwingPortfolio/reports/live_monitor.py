@@ -40,6 +40,8 @@ def show():
                 "Symbol": sym, "Dir": p.get("direction", ""),
                 "Qty": qty, "Entry": f"{entry:.2f}",
                 "LTP": f"{ltp:.2f}", "P&L": f"{pnl:+,.0f}",
+                "Opt": p.get("option_symbol", ""),
+                "Strike": p.get("option_strike", ""),
                 "Strategy": p.get("strategy", "")
             })
         
