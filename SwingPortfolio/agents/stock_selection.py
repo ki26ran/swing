@@ -48,9 +48,10 @@ def run():
             dt = valid.index[-1].date()
             if max_date is None or dt > max_date:
                 max_date = dt
+    now_naive = datetime.now()
     all_dates = sorted(set(
         ts.date() for d in data.values() for ts in d.index
-        if ts < pd.Timestamp(now, tz=_TZ)
+        if ts < pd.Timestamp(now_naive)
     ))
     # Never scan using today's partial candle (look-ahead bias)
     # If max_date is today and market hasn't closed, fall back to previous day
@@ -62,7 +63,7 @@ def run():
             # Today's candle is still forming — use previous trading day
             prev_dates = sorted(set(
                 ts.date() for d in data.values() for ts in d.index
-                if ts < pd.Timestamp(now, tz=_TZ) and ts.date() < now.date()
+                if ts < pd.Timestamp(now_naive) and ts.date() < now.date()
             ))
             if prev_dates:
                 max_date = prev_dates[-1]
