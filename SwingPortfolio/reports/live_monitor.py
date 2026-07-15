@@ -29,7 +29,8 @@ def show():
         
         total_pnl = 0
         rows = []
-        for sym, p in positions.items():
+        for p in (positions if isinstance(positions, list) else positions.values()):
+            sym = p.get("symbol", p.get("sym", "?"))
             qty = int(p.get("qty", 0))
             entry = float(p.get("entry_price", 0))
             ltp = float(p.get("last_price", entry))
@@ -61,7 +62,7 @@ def show():
         sc = strat_map.get(sid, {})
         enabled = sc.get("enabled", True)
         status = "✅" if enabled else "⛔"
-        st.write(f"{status} **{s.name() if hasattr(s, 'name') else sid}**")
+        st.write(f"{status} **{s.name if hasattr(s, 'name') else sid}**")
     
     # Recent signals
     st.subheader("📊 Recent Signals")
