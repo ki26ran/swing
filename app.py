@@ -15,7 +15,6 @@ st.set_page_config(page_title="Swing Trading System", layout="wide")
 PAGES = {
     "📊 Dashboard": "SwingPortfolio.reports.dashboard",
     "📈 Stock Selection": "SwingPortfolio.reports.stock_selection",
-    "📡 Live Scanner": "SwingPortfolio.reports.live_scanner",
     "⏪ Backtest": "SwingPortfolio.reports.backtest",
     "📡 Live Monitor": "SwingPortfolio.reports.live_monitor",
     "⚙️ Scheduler": "SwingPortfolio.reports.scheduler",
